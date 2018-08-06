@@ -194,6 +194,10 @@ var AppComponent = /** @class */ (function () {
         this.data = data;
         this.auth = auth;
         router.events.subscribe(function (_) { return _this.currentUrl = _.url; });
+        //let status: boolean = this.auth.getLoggedInStatus();console.log(status);
+        // if(status == false) {
+        //   this.router.navigate(['/login']);
+        // }
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -206,7 +210,7 @@ var AppComponent = /** @class */ (function () {
                 _this.router.navigate([route_url]);
             }
             else {
-                console.log("hg");
+                _this.router.navigate(['/login']);
             }
         });
     };
@@ -589,7 +593,7 @@ module.exports = "/* .user_content {\r\n    text-align: center;\r\n    padding: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"user_content\" [ngStyle]=\"{'background-image': 'url(\\'assets/images/choreographers.jpg\\')'}\">\n  <h1>List of available ChoreoGraphers</h1>\n    <ul [@listStagger] = \"users$\">\n            <li *ngFor=\"let user of users$\">\n              <a routerLink='/details/{{user.choreographerId}}'>{{user.name | uppercase}}</a>\n          \n              <ul>\n                <li>DanceStyle: {{user.dancestyle}}</li>\n                <li>\n                  Availability Day:<a href=\"#\">{{user.available}}</a>\n                </li>\n                <li>Age: {{user.age}}</li>\n              </ul>\n            </li>\n          </ul>\n</div>\n"
+module.exports = "<div class=\"user_content\" [ngStyle]=\"{'background-image': 'url(\\'assets/images/choreographers.jpg\\')'}\">\n  <h1>List of available ChoreoGraphers</h1>\n    <ul [@listStagger] = \"users$\">\n            <li *ngFor=\"let user of users$\">\n              <a routerLink='/details/{{user.choreographerId}}'>{{user.name | uppercase}}</a>\n          \n              <ul>\n                <li>DanceStyle: {{user.dancestyle}}</li>\n                <li>\n                  Availability Day:<a href=\"{{user.choreographerId}}\">{{user.available}}</a>\n                </li>\n                <li>Age: {{user.age}}</li>\n              </ul>\n            </li>\n          </ul>\n</div>\n"
 
 /***/ }),
 
@@ -608,6 +612,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _negotiate_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../negotiate.service */ "./src/app/negotiate.service.ts");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../auth.service */ "./src/app/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -622,12 +627,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var ChoreographersComponent = /** @class */ (function () {
-    function ChoreographersComponent(data, router, negotiate) {
+    function ChoreographersComponent(data, router, negotiate, auth) {
         var _this = this;
         this.data = data;
         this.router = router;
         this.negotiate = negotiate;
+        this.auth = auth;
         this._router = router;
         this._router.events.subscribe(function (route) {
             _this.currentUrl = _this._router.url;
@@ -638,6 +645,10 @@ var ChoreographersComponent = /** @class */ (function () {
             _this.users$ = data;
             console.log(data);
         });
+        setTimeout((function () {
+            this.loggout();
+            console.log(this.currentUrl);
+        }).bind(this), 43200000);
     }
     ChoreographersComponent.prototype.ngOnInit = function () {
         // this.choreographer = 'choreographer';
@@ -656,6 +667,10 @@ var ChoreographersComponent = /** @class */ (function () {
         // );
         var demo = "Its an 'Inter Component Communication' variable";
         this.negotiate.createEvent('data added : ' + demo);
+    };
+    ChoreographersComponent.prototype.loggout = function () {
+        this.auth.logout();
+        this.router.navigate(['/login']);
     };
     ChoreographersComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -677,7 +692,7 @@ var ChoreographersComponent = /** @class */ (function () {
                 ])
             ]
         }),
-        __metadata("design:paramtypes", [_data_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _negotiate_service__WEBPACK_IMPORTED_MODULE_4__["NegotiateService"]])
+        __metadata("design:paramtypes", [_data_service__WEBPACK_IMPORTED_MODULE_1__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _negotiate_service__WEBPACK_IMPORTED_MODULE_4__["NegotiateService"], _auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]])
     ], ChoreographersComponent);
     return ChoreographersComponent;
 }());
@@ -704,7 +719,7 @@ module.exports = ".contact_container {\r\n    padding: 11%;\r\n   padding-left: 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"contact_container\">\n    <ngb-alert type=\"success\" [dismissible]=\"submitted\" *ngIf=\"submitted\" (close)=\"submitted=false\">\n        <strong> {{response}}</strong>\n      </ngb-alert>\n      <ngb-alert type=\"danger\" [dismissible]=\"error\" *ngIf=\"error\" (close)=\"error=false\">\n          <strong> {{response}}</strong>\n        </ngb-alert>\n  <h1  appShadow class=\"contact_header\">Send Us a Message ({{currency | currency: 'EUR'}})</h1>\n  <h5 [appShadow]= \"'green'\" [appShadowX]=\"'12px'\" [appShadowY]=\"'6px'\" [appShadowBlur]=\"'30px'\" appFancy>\n    For general inquiries, please call 212-405-9000 or use the Contact form below.\n  </h5><br>\n<form #contactForm = \"ngForm\" (ngSubmit)=\"processForm()\">\n  \n  <!-- name -->\n  <div class=\"form-group field\">\n    <input type=\"text\" name=\"name\" class=\"form-control input\" placeholder=\"Your Name\" [(ngModel)]=\"name\" >\n  </div>\n\n  <!-- email -->\n  <div class=\"form-group field\">\n    <input type=\"email\" name=\"email\" class=\"form-control input\" placeholder=\"Your Email\" [(ngModel)]=\"email\" >\n  </div>\n\n  <!-- message -->\n  <div class=\"form-group field\">\n    <textarea class=\"form-control textarea\" name=\"message\" placeholder=\"What's on your mind?\" [(ngModel)]=\"message\" ></textarea>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-success button is-danger is-large submt\" [disabled]=\"!contactForm.form.valid\">Submit</button>\n\n</form>\n</div>\n"
+module.exports = "<div class=\"contact_container\">\n    <ngb-alert type=\"success\" [dismissible]=\"submitted\" *ngIf=\"submitted\" (close)=\"submitted=false\">\n        <strong> {{response}}</strong>\n      </ngb-alert>\n      <ngb-alert type=\"danger\" [dismissible]=\"error\" *ngIf=\"error\" (close)=\"error=false\">\n          <strong> {{response}}</strong>\n        </ngb-alert>\n  <h1  appShadow class=\"contact_header\">Send Us a Message ({{currency | currency: 'INR' : 'code'}})</h1>\n  <h5 [appShadow]= \"'green'\" [appShadowX]=\"'12px'\" [appShadowY]=\"'6px'\" [appShadowBlur]=\"'30px'\" appFancy>\n    For general inquiries, please call 212-405-9000 or use the Contact form below.\n  </h5><br>\n<form #contactForm = \"ngForm\" (ngSubmit)=\"processForm()\">\n  \n  <!-- name -->\n  <div class=\"form-group field\">\n    <input type=\"text\" name=\"name\" class=\"form-control input\" placeholder=\"Your Name\" [(ngModel)]=\"name\" >\n  </div>\n\n  <!-- email -->\n  <div class=\"form-group field\">\n    <input type=\"email\" name=\"email\" class=\"form-control input\" placeholder=\"Your Email\" [(ngModel)]=\"email\" >\n  </div>\n\n  <!-- message -->\n  <div class=\"form-group field\">\n    <textarea class=\"form-control textarea\" name=\"message\" placeholder=\"What's on your mind?\" [(ngModel)]=\"message\" ></textarea>\n  </div>\n\n  <button type=\"submit\" class=\"btn btn-success button is-danger is-large submt\" [disabled]=\"!contactForm.form.valid\">Submit</button>\n\n</form>\n</div>\n"
 
 /***/ }),
 
@@ -879,6 +894,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../data.service */ "./src/app/data.service.ts");
 /* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../auth.service */ "./src/app/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -893,17 +909,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var DancersComponent = /** @class */ (function () {
-    function DancersComponent(db, data, router) {
+    function DancersComponent(db, data, router, auth) {
         var _this = this;
         this.db = db;
         this.data = data;
         this.router = router;
+        this.auth = auth;
         router.events.subscribe(function (route) {
             _this.currentUrl = router.url;
             _this.data.storeUrl(_this.currentUrl);
         });
         this.dancers_list();
+        setTimeout((function () {
+            this.loggout();
+            console.log(this.currentUrl);
+        }).bind(this), 43200000);
     }
     DancersComponent.prototype.ngOnInit = function () {
         // this.dancer = 'dancer';
@@ -920,6 +942,10 @@ var DancersComponent = /** @class */ (function () {
         this.data.getDancers(this.dancer).subscribe(function (data) {
             _this.dancers = data;
         });
+    };
+    DancersComponent.prototype.loggout = function () {
+        this.auth.logout();
+        this.router.navigate(['/login']);
     };
     DancersComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -940,7 +966,7 @@ var DancersComponent = /** @class */ (function () {
                 ])
             ]
         }),
-        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"], _data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        __metadata("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_1__["AngularFirestore"], _data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]])
     ], DancersComponent);
     return DancersComponent;
 }());
@@ -1211,7 +1237,7 @@ module.exports = "#footer {\r\n    letter-spacing: .5px;\r\n    line-height: 1.6
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <p>\n  footer works!\n</p> -->\n\n<footer id=\"footer\" role=\"contentinfo\">\n    <div class=\"footer-inner\">\n    \n      <div class=\"foot-layout\"  id=\"footerBlocks\">\n                  <div class=\"foot-content\">\n                    <p>\n                      <!-- <a href=\"/mini-ballet\">\n                        AGES 1 TO 4\n                      </a>\n                      <br>\n                      <a href=\"/ages-7up\">\n                        AGES 5 &amp; UP\n                      </a><br>\n                      <a href=\"/intensive-programs\">\n                        Intensive Programs\n                      </a><br> -->\n                      <a routerLink=\"home\" title=\"home\">Home</a><br>\n                      <a routerLink=\"register\" title=\"Registration\">Registration\n                      </a><br>\n                     \n                    </p>\n                  </div>\n              \n                  <div class=\"foot-content\">\n                    <p>\n                      <a routerLink=\"dancers\" title=\"List of Dancers\">Dancers\n                      </a><br>\n                      <a target=\"_blank\" routerLink=\"choreographers\" title=\"List of Choreographers\">Choreographers\n                      </a><br>\n                      <!-- <a target=\"_blank\" href=\"/s/newsletter_dec_2016.pdf\">Newsletter\n                      </a><br>\n                      <a target=\"_blank\" href=\"/s/Master-Schedule-2018-2019-revised-May-8.pdf\">MASTER SCHEDULE\n                      </a><br>\n                      <a href=\"/calendar\">School Calendar\n                      </a> -->\n                    </p>\n                  </div>\n                \n              \n                  <div class=\"foot-content\">\n                    <p>\n                      <a routerLink=\"/summerPrograms\" title=\"Summer Programs\">Summer Programs\n                      </a><br>\n                      <a routerLink=\"/contactUs\" title=\"Contact Us\">Contact\n                      </a>\n                    </p>\n                  </div>\n                \n      </div>\n\n    </div>\n    <p class=\"negotiate\">{{negtiate_variable}}</p>\n  </footer>\n"
+module.exports = "<!-- <p>\n  footer works!\n</p> -->\n\n<footer id=\"footer\" role=\"contentinfo\">\n    <div class=\"footer-inner\">\n    \n      <div class=\"foot-layout\"  id=\"footerBlocks\">\n                  <div class=\"foot-content\">\n                    <p>\n                      <!-- <a href=\"/mini-ballet\">\n                        AGES 1 TO 4\n                      </a>\n                      <br>\n                      <a href=\"/ages-7up\">\n                        AGES 5 &amp; UP\n                      </a><br>\n                      <a href=\"/intensive-programs\">\n                        Intensive Programs\n                      </a><br> -->\n                      <a routerLink=\"home\" title=\"home\">Home</a><br>\n                      <a routerLink=\"register\" title=\"Registration\">Registration\n                      </a><br>\n                     \n                    </p>\n                  </div>\n              \n                  <div class=\"foot-content\">\n                    <p>\n                      <a routerLink=\"dancers\" title=\"List of Dancers\">Dancers\n                      </a><br>\n                      <a routerLink=\"choreographers\" title=\"List of Choreographers\">Choreographers\n                      </a><br>\n                      <!-- <a target=\"_blank\" href=\"/s/newsletter_dec_2016.pdf\">Newsletter\n                      </a><br>\n                      <a target=\"_blank\" href=\"/s/Master-Schedule-2018-2019-revised-May-8.pdf\">MASTER SCHEDULE\n                      </a><br>\n                      <a href=\"/calendar\">School Calendar\n                      </a> -->\n                    </p>\n                  </div>\n                \n              \n                  <div class=\"foot-content\">\n                    <p>\n                      <a routerLink=\"/summerPrograms\" title=\"Summer Programs\">Summer Programs\n                      </a><br>\n                      <a routerLink=\"/contactUs\" title=\"Contact Us\">Contact\n                      </a>\n                    </p>\n                  </div>\n                \n      </div>\n\n    </div>\n    <p class=\"negotiate\">{{negtiate_variable}}</p>\n  </footer>\n"
 
 /***/ }),
 
@@ -1315,6 +1341,7 @@ var HeaderComponent = /** @class */ (function () {
     function HeaderComponent(auth, router) {
         this.auth = auth;
         this.router = router;
+        var status = this.auth.getLoggedInStatus();
     }
     HeaderComponent.prototype.ngOnInit = function () {
     };
