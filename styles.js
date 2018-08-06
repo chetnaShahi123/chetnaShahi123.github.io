@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';\n/* You can add global styles to this file, and also import other style files */\nbody {\r\n    margin: 0;\r\n    background: #F2F2F2;\r\n    font-family: 'Montserrat', sans-serif;\r\n    height: 100vh;\r\n}\n#container {\r\n    display: -ms-grid;\r\n    display: grid;\r\n    -ms-grid-columns: 70px auto;\r\n        grid-template-columns: 70px auto;\r\n    height: 100%;\r\n }\n#container #content {\r\n    padding: 30px 50px;\r\n}\n#container #content ul {\r\n    list-style-type: none;\r\n    margin:0;padding:0;\r\n}\n#container #content ul li {\r\n    background: #fff;\r\n    border-radius: 8px;\r\n    padding: 20px;\r\n    margin-bottom: 8px;\r\n}\n#container #content ul li a, .heading {\r\n    font-size: 1.5em;\r\n    text-decoration: none;\r\n    font-weight: bold;\r\n    color:#00A8FF;\r\n}\n#container #content ul li ul {\r\n    margin-top: 20px;\r\n}\n#container #content ul li ul li {\r\n    padding:0;\r\n}\n#container #content ul li ul li a {\r\n    font-size: 1em;\r\n    font-weight: 300;\r\n}\r\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n/* @import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'; */\n/* body {\n    margin: 0;\n    background: #F2F2F2;\n    font-family: 'Montserrat', sans-serif;\n    height: 100vh;\n} */\n/* #container #content ul {\n    list-style-type: none;\n    margin:0;padding:0;\n}\n\n#container #content ul li {\n    background: #fff;\n    border-radius: 8px;\n    padding: 20px;\n    margin-bottom: 8px;\n}\n#container #content ul li a, .heading {\n    font-size: 1.5em;\n    text-decoration: none;\n    font-weight: bold;\n    color:#00A8FF;\n}\n#container #content ul li ul {\n    margin-top: 20px;\n}\n#container #content ul li ul li {\n    padding:0;\n}\n#container #content ul li ul li a {\n    font-size: 1em;\n    font-weight: 300;\n}\n#container #content {\n    padding: 30px 50px;\n} */\n/* .sidebar{\n    position: absolute;\n    top: 145px;\n    left: 0px;\n    height: 100%;\n} */\n.user_content {\n    text-align: center;\n    padding: 150px 50px;\n    background-repeat: no-repeat;\n     background-position: 50%;\n       background-size: cover;  \n}\n/* .user_content h1 {\n    color: purple;\n} */\n.user_content ul {\n    list-style-type: none;\n    margin:0;padding:0px;\n}\n.user_content ul li {\n    border-radius: 8px;\n    padding: 20px;\n    margin-bottom: 8px;\n}\n.user_content ul li a {\n    font-size: 1.5em;\n    text-decoration: none;\n    font-weight: bold;\n    color:#00A8FF;\n}\n.user_content ul li ul {\n    margin-top: 20px;\n}\n.user_content ul li ul li {\n    padding:0;\n}\n.user_content ul li ul li a {\n    font-size: 1em;\n    font-weight: 300;\n}\n\n"
 
 /***/ }),
 
@@ -539,7 +539,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\nodeJs Clone\angular-supergirls\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! D:\danceWibes\freeTheFoot\feelTheFoot\src\styles.css */"./src/styles.css");
 
 
 /***/ })
