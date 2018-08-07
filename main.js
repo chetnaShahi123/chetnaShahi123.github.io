@@ -69,7 +69,6 @@ var routes = [
     {
         path: 'home',
         component: _home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"],
-        canActivate: [_auth_guard_service__WEBPACK_IMPORTED_MODULE_3__["AuthGuardService"]],
         children: [
             {
                 path: 'feelTheFeet',
