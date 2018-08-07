@@ -69,6 +69,7 @@ var routes = [
     {
         path: 'home',
         component: _home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"],
+        canActivate: [_auth_guard_service__WEBPACK_IMPORTED_MODULE_3__["AuthGuardService"]],
         children: [
             {
                 path: 'feelTheFeet',
@@ -1308,7 +1309,7 @@ module.exports = "/* body, html {\r\n    height: 100%;\r\n    margin: 0;\r\n}\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--<body style=\"background-image:url(assets/images/banner.jpg)\"></body> -->\n<!-- <div class=\"header\"></div> -->\n<!-- <img src=\"assets/images/banner.jpg\" alt=\"Supergirl Image\" class=\"supergirl_image\"> -->\n<div id=\"header\">\n  <div class=\"header-inner\">\n\n<div id=\"logoWrapper\" class=\"wrapper\" data-content-field=\"site-title\">        \n    <h1 id=\"logoImage\" title=\"Free Ur Feet\"><a href=\"/\"><img src=\"assets/images/logo.jpg\" alt=\"Free The Feet\"></a></h1>\n    <h3 class=\"logo_text\">Free Ur Feet</h3>\n</div>\n\n<div class=\"headerNav\">\n  <!-- <div id=\"mainNavWrapper\" class=\"nav-wrapper\"> -->\n<nav>\n  <ul>\n    <li>\n      <a routerLink =\"home\" title=\"home\">\n        HOME\n      </a>\n    </li>\n\n    <li>\n      <a routerLink=\"login\" title=\"login\">\n        LOG IN/Sign up\n      </a>\n    </li>\n\n    <li>\n      <a (click)=\"logout()\" title=\"logout\">\n        LOG Out\n      </a>\n    </li>\n  </ul>\n</nav>\n  <!-- </div> -->\n</div>\n\n </div>\n</div>"
+module.exports = "\n<!--<body style=\"background-image:url(assets/images/banner.jpg)\"></body> -->\n<!-- <div class=\"header\"></div> -->\n<!-- <img src=\"assets/images/banner.jpg\" alt=\"Supergirl Image\" class=\"supergirl_image\"> -->\n<div id=\"header\">\n  <div class=\"header-inner\">\n\n<div id=\"logoWrapper\" class=\"wrapper\" data-content-field=\"site-title\">        \n    <h1 id=\"logoImage\" title=\"Free Ur Feet\"><a href=\"/\"><img src=\"assets/images/logo.jpg\" alt=\"Free The Feet\"></a></h1>\n    <h3 class=\"logo_text\">Free Ur Feet</h3>\n</div>\n\n<div class=\"headerNav\">\n  <!-- <div id=\"mainNavWrapper\" class=\"nav-wrapper\"> -->\n<nav>\n  <ul>\n    <li>\n      <a routerLink =\"home\" title=\"home\">\n        HOME\n      </a>\n    </li>\n\n    <li *ngIf=\"getLoggedInStatussFromservice() == false\">\n      <a routerLink=\"login\" title=\"login\">\n        LOG IN/Sign up\n      </a>\n    </li>\n\n    <li *ngIf=\"getLoggedInStatussFromservice()\">\n      <a (click)=\"logout()\" title=\"logout\">\n        LOG Out\n      </a>\n    </li>\n  </ul>\n</nav>\n  <!-- </div> -->\n</div>\n\n </div>\n</div>"
 
 /***/ }),
 
@@ -1348,6 +1349,9 @@ var HeaderComponent = /** @class */ (function () {
     HeaderComponent.prototype.logout = function () {
         this.auth.logout();
         this.router.navigate(['/login']);
+    };
+    HeaderComponent.prototype.getLoggedInStatussFromservice = function () {
+        return this.auth.getLoggedInStatus();
     };
     HeaderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
