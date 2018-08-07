@@ -1049,7 +1049,7 @@ var DataService = /** @class */ (function () {
                 });
             })
                 .catch(function (err) {
-                reject(err);
+                reject(err.message);
             });
         });
     };
@@ -1808,6 +1808,10 @@ var RegisterComponent = /** @class */ (function () {
                 // this.message = abc;
                 _this.router.navigate(['login']);
                 //this.submitted = true;
+            })
+                .catch(function (errorr) {
+                _this.err_submitted = true;
+                _this.message = errorr;
             });
         }
         //  db.collection('dancers').valueChanges();
